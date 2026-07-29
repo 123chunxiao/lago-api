@@ -18,6 +18,12 @@ class SendWebhookJob < ApplicationJob
 
   WEBHOOK_SERVICES = {
     "alert.triggered" => Webhooks::UsageMonitoring::AlertTriggeredService,
+    "apple_iap.payment_succeeded" => Webhooks::AppleIap::PaymentSucceededService,
+    "apple_iap.payment_failed" => Webhooks::AppleIap::PaymentFailedService,
+    "apple_iap.consumption_requested" => Webhooks::AppleIap::ConsumptionRequestedService,
+    "apple_iap.refund_succeeded" => Webhooks::AppleIap::RefundSucceededService,
+    "apple_iap.refund_declined" => Webhooks::AppleIap::RefundDeclinedService,
+    "apple_iap.refund_reversed" => Webhooks::AppleIap::RefundReversedService,
     "billable_metric.created" => Webhooks::BillableMetrics::CreatedService,
     "billable_metric.updated" => Webhooks::BillableMetrics::UpdatedService,
     "billable_metric.deleted" => Webhooks::BillableMetrics::DeletedService,

@@ -95,6 +95,11 @@ class Organization < ApplicationRecord
   has_many :gocardless_payment_providers, class_name: "PaymentProviders::GocardlessProvider"
   has_many :cashfree_payment_providers, class_name: "PaymentProviders::CashfreeProvider"
   has_many :alipay_payment_providers, class_name: "PaymentProviders::AlipayProvider"
+  has_many :apple_iap_payment_providers, class_name: "PaymentProviders::AppleIapProvider"
+  has_many :apple_iap_orders
+  has_many :apple_iap_notifications
+  has_many :apple_iap_fulfillment_events
+  has_many :apple_iap_consumption_requests
   has_many :adyen_payment_providers, class_name: "PaymentProviders::AdyenProvider"
 
   has_many :hubspot_integrations, class_name: "Integrations::HubspotIntegration"

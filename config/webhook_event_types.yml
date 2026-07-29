@@ -3,6 +3,36 @@ alert_triggered:
   description: One or more thresholds defined in the alert were crossed
   category: Alerts
   deprecated: false
+apple_iap_payment_succeeded:
+  name: apple_iap.payment_succeeded
+  description: An Apple in-app purchase has been verified
+  category: Apple IAP
+  deprecated: false
+apple_iap_payment_failed:
+  name: apple_iap.payment_failed
+  description: An Apple in-app purchase verification has failed
+  category: Apple IAP
+  deprecated: false
+apple_iap_consumption_requested:
+  name: apple_iap.consumption_requested
+  description: Apple requested consumption information for a purchase
+  category: Apple IAP
+  deprecated: false
+apple_iap_refund_succeeded:
+  name: apple_iap.refund_succeeded
+  description: Apple refunded an in-app purchase
+  category: Apple IAP
+  deprecated: false
+apple_iap_refund_declined:
+  name: apple_iap.refund_declined
+  description: Apple declined a refund request
+  category: Apple IAP
+  deprecated: false
+apple_iap_refund_reversed:
+  name: apple_iap.refund_reversed
+  description: Apple reversed a previous refund
+  category: Apple IAP
+  deprecated: false
 billable_metric_created:
   name: billable_metric.created
   description: A new billable metric has been created

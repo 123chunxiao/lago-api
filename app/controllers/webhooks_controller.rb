@@ -52,6 +52,18 @@ class WebhooksController < ApplicationController
     render plain: "success"
   end
 
+  def apple_iap
+    result = PaymentProviders::AppleIap::Notifications::CreateService.call(
+      organization_id: params[:organization_id],
+      code: params[:code].presence,
+      signed_payload: params.require(:signedPayload)
+    )
+
+    return head(:bad_request) if result.failure?
+
+    head(:ok)
+  end
+
   def alipay_notification_params
     request.request_parameters.except("controller", "action", "organization_id", "code")
   end
