@@ -104,6 +104,30 @@ FactoryBot.define do
     end
   end
 
+  factory :apple_iap_provider, class: "PaymentProviders::AppleIapProvider" do
+    organization
+    type { "PaymentProviders::AppleIapProvider" }
+    code { "apple_iap_#{SecureRandom.uuid}" }
+    name { "Apple IAP" }
+
+    secrets do
+      {issuer_id:, key_id:, private_key:}.to_json
+    end
+
+    settings do
+      {bundle_id:, app_apple_id:, product_ids:}
+    end
+
+    transient do
+      issuer_id { SecureRandom.uuid }
+      key_id { SecureRandom.hex(5).upcase }
+      private_key { OpenSSL::PKey::EC.generate("prime256v1").to_pem }
+      bundle_id { "com.example.linx" }
+      app_apple_id { 123_456_789 }
+      product_ids { ["com.example.linx.voice-clone"] }
+    end
+  end
+
   factory :moneyhash_provider, class: "PaymentProviders::MoneyhashProvider" do
     organization
     type { "PaymentProviders::MoneyhashProvider" }

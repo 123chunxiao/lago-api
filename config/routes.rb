@@ -164,8 +164,19 @@ Rails.application.routes.draw do
 
       resources :orders, only: %i[show index]
       resources :payments, only: %i[create index show]
+      scope path: "apple-iap", module: "apple_iap", as: "apple_iap" do
+        post "orders/verify", to: "orders#verify"
+        get "orders/lookup", to: "orders#lookup"
+        resources :orders, only: %i[show] do
+          post "fulfillment-events", to: "fulfillment_events#create"
+          put "consumption-requests/:notification_uuid",
+            to: "consumption_requests#update",
+            as: :consumption_request
+        end
+      end
       namespace :payment_providers do
         put "alipay/:code", to: "alipay#update", as: :alipay, code: /.*/
+        put "apple_iap/:code", to: "apple_iap#update", as: :apple_iap, code: /.*/
       end
       resources :plans, param: :code, code: /.*/ do
         resources :charges, only: %i[index show create update destroy], param: :code, code: /.*/, controller: "plans/charges" do
@@ -214,6 +225,7 @@ Rails.application.routes.draw do
     post "stripe/:organization_id", to: "webhooks#stripe", on: :collection, as: :stripe
 
     post "alipay/:organization_id", to: "webhooks#alipay", on: :collection, as: :alipay
+    post "apple_iap/:organization_id", to: "webhooks#apple_iap", on: :collection, as: :apple_iap
     post "cashfree/:organization_id", to: "webhooks#cashfree", on: :collection, as: :cashfree
     post "flutterwave/:organization_id", to: "webhooks#flutterwave", on: :collection, as: :flutterwave
     post "gocardless/:organization_id", to: "webhooks#gocardless", on: :collection, as: :gocardless

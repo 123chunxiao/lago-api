@@ -18,8 +18,10 @@ ALTER TABLE IF EXISTS ONLY public.dunning_campaign_thresholds DROP CONSTRAINT IF
 ALTER TABLE IF EXISTS ONLY public.subscription_activation_rules DROP CONSTRAINT IF EXISTS fk_rails_fd60209637;
 ALTER TABLE IF EXISTS ONLY public.adjusted_fees DROP CONSTRAINT IF EXISTS fk_rails_fd399a23d3;
 ALTER TABLE IF EXISTS ONLY public.wallet_targets DROP CONSTRAINT IF EXISTS fk_rails_fbd2b9fccb;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_fulfillment_events DROP CONSTRAINT IF EXISTS fk_rails_f9d870376b;
 ALTER TABLE IF EXISTS ONLY public.fees_taxes DROP CONSTRAINT IF EXISTS fk_rails_f98413d404;
 ALTER TABLE IF EXISTS ONLY public.order_forms DROP CONSTRAINT IF EXISTS fk_rails_f94f882198;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_consumption_requests DROP CONSTRAINT IF EXISTS fk_rails_f732c789a2;
 ALTER TABLE IF EXISTS ONLY public.billing_entities DROP CONSTRAINT IF EXISTS fk_rails_f66617edcb;
 ALTER TABLE IF EXISTS ONLY public.payment_receipts DROP CONSTRAINT IF EXISTS fk_rails_f53ff93138;
 ALTER TABLE IF EXISTS ONLY public.quantified_events DROP CONSTRAINT IF EXISTS fk_rails_f510acb495;
@@ -42,6 +44,7 @@ ALTER TABLE IF EXISTS ONLY public.customers_taxes DROP CONSTRAINT IF EXISTS fk_r
 ALTER TABLE IF EXISTS ONLY public.subscriptions DROP CONSTRAINT IF EXISTS fk_rails_e744efbe51;
 ALTER TABLE IF EXISTS ONLY public.charge_filters DROP CONSTRAINT IF EXISTS fk_rails_e711e8089e;
 ALTER TABLE IF EXISTS ONLY public.user_devices DROP CONSTRAINT IF EXISTS fk_rails_e700a96826;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_notifications DROP CONSTRAINT IF EXISTS fk_rails_e5c89f5695;
 ALTER TABLE IF EXISTS ONLY public.integration_mappings DROP CONSTRAINT IF EXISTS fk_rails_e4a58fbcac;
 ALTER TABLE IF EXISTS ONLY public.usage_monitoring_triggered_alerts DROP CONSTRAINT IF EXISTS fk_rails_e3cf54daac;
 ALTER TABLE IF EXISTS ONLY public.integration_collection_mappings DROP CONSTRAINT IF EXISTS fk_rails_e148d17c1f;
@@ -65,6 +68,7 @@ ALTER TABLE IF EXISTS ONLY public.payments DROP CONSTRAINT IF EXISTS fk_rails_d3
 ALTER TABLE IF EXISTS ONLY public.quote_versions DROP CONSTRAINT IF EXISTS fk_rails_d2d917b73a;
 ALTER TABLE IF EXISTS ONLY public.item_metadata DROP CONSTRAINT IF EXISTS fk_rails_d0b1714507;
 ALTER TABLE IF EXISTS ONLY public.wallet_transactions DROP CONSTRAINT IF EXISTS fk_rails_d07bc24ce3;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_consumption_requests DROP CONSTRAINT IF EXISTS fk_rails_cf0839917d;
 ALTER TABLE IF EXISTS ONLY public.integration_customers DROP CONSTRAINT IF EXISTS fk_rails_ce2c63d69f;
 ALTER TABLE IF EXISTS ONLY public.subscription_fixed_charge_units_overrides DROP CONSTRAINT IF EXISTS fk_rails_cdaf36dc89;
 ALTER TABLE IF EXISTS ONLY public.pricing_units DROP CONSTRAINT IF EXISTS fk_rails_cd99351ee3;
@@ -100,11 +104,13 @@ ALTER TABLE IF EXISTS ONLY public.billing_entities_invoice_custom_sections DROP 
 ALTER TABLE IF EXISTS ONLY public.daily_usages DROP CONSTRAINT IF EXISTS fk_rails_b07fc711f7;
 ALTER TABLE IF EXISTS ONLY public.pricing_unit_usages DROP CONSTRAINT IF EXISTS fk_rails_aea6422e6a;
 ALTER TABLE IF EXISTS ONLY public.charges_taxes DROP CONSTRAINT IF EXISTS fk_rails_ac146c9541;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_fulfillment_events DROP CONSTRAINT IF EXISTS fk_rails_ab54c181e5;
 ALTER TABLE IF EXISTS ONLY public.usage_monitoring_subscription_activities DROP CONSTRAINT IF EXISTS fk_rails_ab16de0b32;
 ALTER TABLE IF EXISTS ONLY public.commitments_taxes DROP CONSTRAINT IF EXISTS fk_rails_aaa12f7d3e;
 ALTER TABLE IF EXISTS ONLY public.entitlement_entitlement_values DROP CONSTRAINT IF EXISTS fk_rails_aa34dd5db6;
 ALTER TABLE IF EXISTS ONLY public.fixed_charges DROP CONSTRAINT IF EXISTS fk_rails_aa04ceacf6;
 ALTER TABLE IF EXISTS ONLY public.integration_items DROP CONSTRAINT IF EXISTS fk_rails_a9dc2ea536;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_orders DROP CONSTRAINT IF EXISTS fk_rails_a87f355b87;
 ALTER TABLE IF EXISTS ONLY public.recurring_transaction_rules_invoice_custom_sections DROP CONSTRAINT IF EXISTS fk_rails_a7f20c73bb;
 ALTER TABLE IF EXISTS ONLY public.charges DROP CONSTRAINT IF EXISTS fk_rails_a710519346;
 ALTER TABLE IF EXISTS ONLY public.group_properties DROP CONSTRAINT IF EXISTS fk_rails_a2d2cb3819;
@@ -178,6 +184,7 @@ ALTER TABLE IF EXISTS ONLY public.billing_entities_invoice_custom_sections DROP 
 ALTER TABLE IF EXISTS ONLY public.customers_invoice_custom_sections DROP CONSTRAINT IF EXISTS fk_rails_68754484c0;
 ALTER TABLE IF EXISTS ONLY public.integration_resources DROP CONSTRAINT IF EXISTS fk_rails_67d4eb3c92;
 ALTER TABLE IF EXISTS ONLY public.subscriptions DROP CONSTRAINT IF EXISTS fk_rails_66eb6b32c1;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_notifications DROP CONSTRAINT IF EXISTS fk_rails_6681388c5b;
 ALTER TABLE IF EXISTS ONLY public.fixed_charges_taxes DROP CONSTRAINT IF EXISTS fk_rails_665ae33492;
 ALTER TABLE IF EXISTS ONLY public.billing_entities_taxes DROP CONSTRAINT IF EXISTS fk_rails_651eadaaa4;
 ALTER TABLE IF EXISTS ONLY public.integration_collection_mappings DROP CONSTRAINT IF EXISTS fk_rails_650fccfc41;
@@ -230,6 +237,7 @@ ALTER TABLE IF EXISTS ONLY public.entitlement_privileges DROP CONSTRAINT IF EXIS
 ALTER TABLE IF EXISTS ONLY public.orders DROP CONSTRAINT IF EXISTS fk_rails_3dad120da9;
 ALTER TABLE IF EXISTS ONLY public.integration_collection_mappings DROP CONSTRAINT IF EXISTS fk_rails_3d568ff9de;
 ALTER TABLE IF EXISTS ONLY public.charges DROP CONSTRAINT IF EXISTS fk_rails_3cfe1d68d7;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_orders DROP CONSTRAINT IF EXISTS fk_rails_3cca8cb49c;
 ALTER TABLE IF EXISTS ONLY public.daily_usages DROP CONSTRAINT IF EXISTS fk_rails_3c7c3920c0;
 ALTER TABLE IF EXISTS ONLY public.wallet_transaction_consumptions DROP CONSTRAINT IF EXISTS fk_rails_3c786cd3e3;
 ALTER TABLE IF EXISTS ONLY public.invoice_settlements DROP CONSTRAINT IF EXISTS fk_rails_3b7dad8e9c;
@@ -300,6 +308,7 @@ ALTER TABLE IF EXISTS ONLY public.customers_taxes DROP CONSTRAINT IF EXISTS fk_r
 ALTER TABLE IF EXISTS ONLY public.entitlement_entitlements DROP CONSTRAINT IF EXISTS fk_rails_0c9773c34d;
 ALTER TABLE IF EXISTS ONLY public.coupon_targets DROP CONSTRAINT IF EXISTS fk_rails_0bb6dcc01f;
 ALTER TABLE IF EXISTS ONLY public.usage_monitoring_triggered_alerts DROP CONSTRAINT IF EXISTS fk_rails_0baa7bd751;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_consumption_requests DROP CONSTRAINT IF EXISTS fk_rails_0acab39ea9;
 ALTER TABLE IF EXISTS ONLY public.fees DROP CONSTRAINT IF EXISTS fk_rails_0934890b24;
 ALTER TABLE IF EXISTS ONLY public.add_ons_taxes DROP CONSTRAINT IF EXISTS fk_rails_08dfe87131;
 ALTER TABLE IF EXISTS ONLY public.enriched_store_subscription_migrations DROP CONSTRAINT IF EXISTS fk_rails_08d9dce6d1;
@@ -788,6 +797,22 @@ DROP INDEX IF EXISTS public.index_applied_coupons_on_coupon_id;
 DROP INDEX IF EXISTS public.index_applied_add_ons_on_customer_id;
 DROP INDEX IF EXISTS public.index_applied_add_ons_on_add_on_id_and_customer_id;
 DROP INDEX IF EXISTS public.index_applied_add_ons_on_add_on_id;
+DROP INDEX IF EXISTS public.index_apple_iap_orders_on_payment_provider_id;
+DROP INDEX IF EXISTS public.index_apple_iap_orders_on_organization_id_and_refund_status;
+DROP INDEX IF EXISTS public.index_apple_iap_orders_on_organization_id_and_payment_status;
+DROP INDEX IF EXISTS public.index_apple_iap_orders_on_organization_id;
+DROP INDEX IF EXISTS public.index_apple_iap_notifications_on_organization_id_and_status;
+DROP INDEX IF EXISTS public.index_apple_iap_notifications_on_organization_id;
+DROP INDEX IF EXISTS public.index_apple_iap_notifications_on_notification_uuid;
+DROP INDEX IF EXISTS public.index_apple_iap_notifications_on_apple_iap_order_id;
+DROP INDEX IF EXISTS public.index_apple_iap_fulfillment_events_on_organization_id;
+DROP INDEX IF EXISTS public.index_apple_iap_fulfillment_events_on_event_id;
+DROP INDEX IF EXISTS public.index_apple_iap_fulfillment_events_on_apple_iap_order_id;
+DROP INDEX IF EXISTS public.index_apple_iap_consumption_requests_on_status_and_deadline_at;
+DROP INDEX IF EXISTS public.index_apple_iap_consumption_requests_on_response_event_id;
+DROP INDEX IF EXISTS public.index_apple_iap_consumption_requests_on_organization_id;
+DROP INDEX IF EXISTS public.index_apple_iap_consumption_requests_on_notification_uuid;
+DROP INDEX IF EXISTS public.index_apple_iap_consumption_requests_on_apple_iap_order_id;
 DROP INDEX IF EXISTS public.index_api_keys_on_value;
 DROP INDEX IF EXISTS public.index_api_keys_on_organization_id;
 DROP INDEX IF EXISTS public.index_ai_conversations_on_organization_id;
@@ -841,15 +866,18 @@ DROP INDEX IF EXISTS public.idx_on_subscription_id_295edd8bb3;
 DROP INDEX IF EXISTS public.idx_on_recurring_transaction_rule_id_fba3d39cca;
 DROP INDEX IF EXISTS public.idx_on_plan_id_billable_metric_id_pay_in_advance_4a205974cb;
 DROP INDEX IF EXISTS public.idx_on_outbound_wallet_transaction_id_cf6ff733c6;
+DROP INDEX IF EXISTS public.idx_on_organization_id_transaction_id_529085d797;
 DROP INDEX IF EXISTS public.idx_on_organization_id_subscription_at_created_at_id;
 DROP INDEX IF EXISTS public.idx_on_organization_id_provider_payment_id_gin_trgm_2bcf073c0b;
 DROP INDEX IF EXISTS public.idx_on_organization_id_organization_sequential_id_2387146f54;
 DROP INDEX IF EXISTS public.idx_on_organization_id_external_subscription_id_df3a30d96d;
 DROP INDEX IF EXISTS public.idx_on_organization_id_external_id_gin_trgm_ops_fb8058a497;
+DROP INDEX IF EXISTS public.idx_on_organization_id_external_customer_id_83989a0b8c;
 DROP INDEX IF EXISTS public.idx_on_organization_id_e742f77454;
 DROP INDEX IF EXISTS public.idx_on_organization_id_e73219f079;
 DROP INDEX IF EXISTS public.idx_on_organization_id_deleted_at_225e3f789d;
 DROP INDEX IF EXISTS public.idx_on_organization_id_ccdf05cbfe;
+DROP INDEX IF EXISTS public.idx_on_organization_id_app_account_token_9aff424526;
 DROP INDEX IF EXISTS public.idx_on_organization_id_83703a45f4;
 DROP INDEX IF EXISTS public.idx_on_organization_id_7020c3c43a;
 DROP INDEX IF EXISTS public.idx_on_organization_id_376a587b04;
@@ -874,6 +902,7 @@ DROP INDEX IF EXISTS public.idx_on_billing_entity_id_invoice_custom_section_id_b
 DROP INDEX IF EXISTS public.idx_on_billing_entity_id_customer_id_invoice_custom_e7aada65cb;
 DROP INDEX IF EXISTS public.idx_on_billing_entity_id_billing_entity_sequential__bd26b2e655;
 DROP INDEX IF EXISTS public.idx_on_billing_entity_id_724373e5ae;
+DROP INDEX IF EXISTS public.idx_on_apple_iap_notification_id_fd52eccb79;
 DROP INDEX IF EXISTS public.idx_invoices_organization_id_status;
 DROP INDEX IF EXISTS public.idx_invoice_subscriptions_on_subscription_with_timestamps;
 DROP INDEX IF EXISTS public.idx_features_code_unique_per_organization;
@@ -883,6 +912,9 @@ DROP INDEX IF EXISTS public.idx_enriched_store_sub_migrations_on_migration_and_s
 DROP INDEX IF EXISTS public.idx_enqueued_per_organization;
 DROP INDEX IF EXISTS public.idx_cached_aggregation_filtered_lookup;
 DROP INDEX IF EXISTS public.idx_billable_metrics_id_agg_type;
+DROP INDEX IF EXISTS public.idx_apple_iap_orders_unique_transaction;
+DROP INDEX IF EXISTS public.idx_apple_iap_orders_org_business_request;
+DROP INDEX IF EXISTS public.idx_apple_iap_fulfillment_order_version;
 DROP INDEX IF EXISTS public.idx_alerts_unique_per_type_per_wallet;
 DROP INDEX IF EXISTS public.idx_alerts_unique_per_type_per_subscription_with_bm;
 DROP INDEX IF EXISTS public.idx_alerts_unique_per_type_per_subscription;
@@ -1009,6 +1041,10 @@ ALTER TABLE IF EXISTS ONLY public.applied_pricing_units DROP CONSTRAINT IF EXIST
 ALTER TABLE IF EXISTS ONLY public.applied_invoice_custom_sections DROP CONSTRAINT IF EXISTS applied_invoice_custom_sections_pkey;
 ALTER TABLE IF EXISTS ONLY public.applied_coupons DROP CONSTRAINT IF EXISTS applied_coupons_pkey;
 ALTER TABLE IF EXISTS ONLY public.applied_add_ons DROP CONSTRAINT IF EXISTS applied_add_ons_pkey;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_orders DROP CONSTRAINT IF EXISTS apple_iap_orders_pkey;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_notifications DROP CONSTRAINT IF EXISTS apple_iap_notifications_pkey;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_fulfillment_events DROP CONSTRAINT IF EXISTS apple_iap_fulfillment_events_pkey;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_consumption_requests DROP CONSTRAINT IF EXISTS apple_iap_consumption_requests_pkey;
 ALTER TABLE IF EXISTS ONLY public.api_keys DROP CONSTRAINT IF EXISTS api_keys_pkey;
 ALTER TABLE IF EXISTS ONLY public.ai_conversations DROP CONSTRAINT IF EXISTS ai_conversations_pkey;
 ALTER TABLE IF EXISTS ONLY public.adjusted_fees DROP CONSTRAINT IF EXISTS adjusted_fees_pkey;
@@ -1175,6 +1211,10 @@ DROP TABLE IF EXISTS public.applied_pricing_units;
 DROP TABLE IF EXISTS public.applied_invoice_custom_sections;
 DROP TABLE IF EXISTS public.applied_coupons;
 DROP TABLE IF EXISTS public.applied_add_ons;
+DROP TABLE IF EXISTS public.apple_iap_orders;
+DROP TABLE IF EXISTS public.apple_iap_notifications;
+DROP TABLE IF EXISTS public.apple_iap_fulfillment_events;
+DROP TABLE IF EXISTS public.apple_iap_consumption_requests;
 DROP TABLE IF EXISTS public.api_keys;
 DROP TABLE IF EXISTS public.ai_conversations;
 DROP TABLE IF EXISTS public.adjusted_fees;
@@ -1220,6 +1260,11 @@ DROP TYPE IF EXISTS public.customer_type;
 DROP TYPE IF EXISTS public.customer_account_type;
 DROP TYPE IF EXISTS public.billable_metric_weighted_interval;
 DROP TYPE IF EXISTS public.billable_metric_rounding_function;
+DROP TYPE IF EXISTS public.apple_iap_order_refund_status;
+DROP TYPE IF EXISTS public.apple_iap_order_payment_status;
+DROP TYPE IF EXISTS public.apple_iap_order_fulfillment_status;
+DROP TYPE IF EXISTS public.apple_iap_notification_status;
+DROP TYPE IF EXISTS public.apple_iap_consumption_request_status;
 DROP EXTENSION IF EXISTS unaccent;
 DROP EXTENSION IF EXISTS pgcrypto;
 DROP EXTENSION IF EXISTS pg_trgm;
@@ -1266,6 +1311,73 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 --
 
 CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
+
+
+--
+-- Name: apple_iap_consumption_request_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.apple_iap_consumption_request_status AS ENUM (
+    'awaiting_backend',
+    'ready',
+    'sending',
+    'sent',
+    'skipped_no_consent',
+    'failed',
+    'expired'
+);
+
+
+--
+-- Name: apple_iap_notification_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.apple_iap_notification_status AS ENUM (
+    'pending',
+    'processing',
+    'succeeded',
+    'failed',
+    'ignored'
+);
+
+
+--
+-- Name: apple_iap_order_fulfillment_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.apple_iap_order_fulfillment_status AS ENUM (
+    'not_reported',
+    'entitlement_granted',
+    'processing',
+    'delivered',
+    'failed',
+    'timed_out'
+);
+
+
+--
+-- Name: apple_iap_order_payment_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.apple_iap_order_payment_status AS ENUM (
+    'verifying',
+    'succeeded',
+    'failed'
+);
+
+
+--
+-- Name: apple_iap_order_refund_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.apple_iap_order_refund_status AS ENUM (
+    'none',
+    'requested',
+    'succeeded',
+    'declined',
+    'reversed',
+    'manual_review'
+);
 
 
 --
@@ -1863,6 +1975,120 @@ CREATE TABLE public.api_keys (
     last_used_at timestamp(6) without time zone,
     name character varying,
     permissions jsonb NOT NULL
+);
+
+
+--
+-- Name: apple_iap_consumption_requests; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.apple_iap_consumption_requests (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    organization_id uuid NOT NULL,
+    apple_iap_order_id uuid NOT NULL,
+    apple_iap_notification_id uuid NOT NULL,
+    notification_uuid uuid NOT NULL,
+    transaction_id character varying NOT NULL,
+    deadline_at timestamp(6) without time zone NOT NULL,
+    status public.apple_iap_consumption_request_status DEFAULT 'awaiting_backend'::public.apple_iap_consumption_request_status NOT NULL,
+    response_event_id uuid,
+    backend_snapshot jsonb DEFAULT '{}'::jsonb NOT NULL,
+    apple_payload jsonb DEFAULT '{}'::jsonb NOT NULL,
+    attempts integer DEFAULT 0 NOT NULL,
+    sent_at timestamp(6) without time zone,
+    last_error text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: apple_iap_fulfillment_events; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.apple_iap_fulfillment_events (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    organization_id uuid NOT NULL,
+    apple_iap_order_id uuid NOT NULL,
+    event_id uuid NOT NULL,
+    fulfillment_version integer NOT NULL,
+    event_type character varying NOT NULL,
+    entitlement_status character varying,
+    clone_status character varying,
+    entitlement_id uuid,
+    clone_task_id uuid,
+    voice_id character varying,
+    attempt_no integer,
+    failure_code character varying,
+    failure_message text,
+    occurred_at timestamp(6) without time zone NOT NULL,
+    payload jsonb DEFAULT '{}'::jsonb NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: apple_iap_notifications; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.apple_iap_notifications (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    organization_id uuid NOT NULL,
+    apple_iap_order_id uuid,
+    notification_uuid uuid NOT NULL,
+    notification_type character varying,
+    subtype character varying,
+    environment character varying,
+    transaction_id character varying,
+    signed_payload text NOT NULL,
+    status public.apple_iap_notification_status DEFAULT 'pending'::public.apple_iap_notification_status NOT NULL,
+    attempts integer DEFAULT 0 NOT NULL,
+    received_at timestamp(6) without time zone NOT NULL,
+    processed_at timestamp(6) without time zone,
+    last_error text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: apple_iap_orders; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.apple_iap_orders (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    organization_id uuid NOT NULL,
+    payment_provider_id uuid NOT NULL,
+    business_request_id uuid,
+    external_customer_id character varying,
+    app_account_token uuid,
+    transaction_id character varying NOT NULL,
+    original_transaction_id character varying,
+    product_id character varying NOT NULL,
+    bundle_id character varying NOT NULL,
+    app_apple_id bigint,
+    environment character varying NOT NULL,
+    product_type character varying,
+    quantity integer DEFAULT 1 NOT NULL,
+    price_milliunits bigint,
+    currency character varying,
+    purchased_at timestamp(6) without time zone,
+    verified_at timestamp(6) without time zone,
+    payment_status public.apple_iap_order_payment_status DEFAULT 'verifying'::public.apple_iap_order_payment_status NOT NULL,
+    refund_status public.apple_iap_order_refund_status DEFAULT 'none'::public.apple_iap_order_refund_status NOT NULL,
+    fulfillment_status public.apple_iap_order_fulfillment_status DEFAULT 'not_reported'::public.apple_iap_order_fulfillment_status NOT NULL,
+    fulfillment_version integer DEFAULT 0 NOT NULL,
+    lock_version integer DEFAULT 0 NOT NULL,
+    signed_transaction text,
+    failure_code character varying,
+    failure_message text,
+    revocation_date timestamp(6) without time zone,
+    revocation_reason character varying,
+    revocation_percentage integer,
+    metadata jsonb DEFAULT '{}'::jsonb NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -5485,6 +5711,38 @@ ALTER TABLE ONLY public.api_keys
 
 
 --
+-- Name: apple_iap_consumption_requests apple_iap_consumption_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_consumption_requests
+    ADD CONSTRAINT apple_iap_consumption_requests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: apple_iap_fulfillment_events apple_iap_fulfillment_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_fulfillment_events
+    ADD CONSTRAINT apple_iap_fulfillment_events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: apple_iap_notifications apple_iap_notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_notifications
+    ADD CONSTRAINT apple_iap_notifications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: apple_iap_orders apple_iap_orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_orders
+    ADD CONSTRAINT apple_iap_orders_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: applied_add_ons applied_add_ons_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -6512,6 +6770,27 @@ CREATE UNIQUE INDEX idx_alerts_unique_per_type_per_wallet ON public.usage_monito
 
 
 --
+-- Name: idx_apple_iap_fulfillment_order_version; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_apple_iap_fulfillment_order_version ON public.apple_iap_fulfillment_events USING btree (apple_iap_order_id, fulfillment_version);
+
+
+--
+-- Name: idx_apple_iap_orders_org_business_request; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_apple_iap_orders_org_business_request ON public.apple_iap_orders USING btree (organization_id, business_request_id) WHERE (business_request_id IS NOT NULL);
+
+
+--
+-- Name: idx_apple_iap_orders_unique_transaction; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_apple_iap_orders_unique_transaction ON public.apple_iap_orders USING btree (bundle_id, environment, transaction_id);
+
+
+--
 -- Name: idx_billable_metrics_id_agg_type; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6572,6 +6851,13 @@ CREATE INDEX idx_invoice_subscriptions_on_subscription_with_timestamps ON public
 --
 
 CREATE INDEX idx_invoices_organization_id_status ON public.invoices USING btree (organization_id, status);
+
+
+--
+-- Name: idx_on_apple_iap_notification_id_fd52eccb79; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_on_apple_iap_notification_id_fd52eccb79 ON public.apple_iap_consumption_requests USING btree (apple_iap_notification_id);
 
 
 --
@@ -6743,6 +7029,13 @@ CREATE INDEX idx_on_organization_id_83703a45f4 ON public.billing_entities_invoic
 
 
 --
+-- Name: idx_on_organization_id_app_account_token_9aff424526; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_on_organization_id_app_account_token_9aff424526 ON public.apple_iap_orders USING btree (organization_id, app_account_token);
+
+
+--
 -- Name: idx_on_organization_id_ccdf05cbfe; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6768,6 +7061,13 @@ CREATE INDEX idx_on_organization_id_e73219f079 ON public.recurring_transaction_r
 --
 
 CREATE INDEX idx_on_organization_id_e742f77454 ON public.subscription_fixed_charge_units_overrides USING btree (organization_id);
+
+
+--
+-- Name: idx_on_organization_id_external_customer_id_83989a0b8c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_on_organization_id_external_customer_id_83989a0b8c ON public.apple_iap_orders USING btree (organization_id, external_customer_id);
 
 
 --
@@ -6803,6 +7103,13 @@ CREATE INDEX idx_on_organization_id_provider_payment_id_gin_trgm_2bcf073c0b ON p
 --
 
 CREATE INDEX idx_on_organization_id_subscription_at_created_at_id ON public.subscriptions USING btree (organization_id, subscription_at DESC NULLS LAST, created_at DESC, id);
+
+
+--
+-- Name: idx_on_organization_id_transaction_id_529085d797; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_on_organization_id_transaction_id_529085d797 ON public.apple_iap_notifications USING btree (organization_id, transaction_id);
 
 
 --
@@ -7178,6 +7485,118 @@ CREATE INDEX index_api_keys_on_organization_id ON public.api_keys USING btree (o
 --
 
 CREATE UNIQUE INDEX index_api_keys_on_value ON public.api_keys USING btree (value);
+
+
+--
+-- Name: index_apple_iap_consumption_requests_on_apple_iap_order_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_consumption_requests_on_apple_iap_order_id ON public.apple_iap_consumption_requests USING btree (apple_iap_order_id);
+
+
+--
+-- Name: index_apple_iap_consumption_requests_on_notification_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_apple_iap_consumption_requests_on_notification_uuid ON public.apple_iap_consumption_requests USING btree (notification_uuid);
+
+
+--
+-- Name: index_apple_iap_consumption_requests_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_consumption_requests_on_organization_id ON public.apple_iap_consumption_requests USING btree (organization_id);
+
+
+--
+-- Name: index_apple_iap_consumption_requests_on_response_event_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_apple_iap_consumption_requests_on_response_event_id ON public.apple_iap_consumption_requests USING btree (response_event_id) WHERE (response_event_id IS NOT NULL);
+
+
+--
+-- Name: index_apple_iap_consumption_requests_on_status_and_deadline_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_consumption_requests_on_status_and_deadline_at ON public.apple_iap_consumption_requests USING btree (status, deadline_at);
+
+
+--
+-- Name: index_apple_iap_fulfillment_events_on_apple_iap_order_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_fulfillment_events_on_apple_iap_order_id ON public.apple_iap_fulfillment_events USING btree (apple_iap_order_id);
+
+
+--
+-- Name: index_apple_iap_fulfillment_events_on_event_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_apple_iap_fulfillment_events_on_event_id ON public.apple_iap_fulfillment_events USING btree (event_id);
+
+
+--
+-- Name: index_apple_iap_fulfillment_events_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_fulfillment_events_on_organization_id ON public.apple_iap_fulfillment_events USING btree (organization_id);
+
+
+--
+-- Name: index_apple_iap_notifications_on_apple_iap_order_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_notifications_on_apple_iap_order_id ON public.apple_iap_notifications USING btree (apple_iap_order_id);
+
+
+--
+-- Name: index_apple_iap_notifications_on_notification_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_apple_iap_notifications_on_notification_uuid ON public.apple_iap_notifications USING btree (notification_uuid);
+
+
+--
+-- Name: index_apple_iap_notifications_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_notifications_on_organization_id ON public.apple_iap_notifications USING btree (organization_id);
+
+
+--
+-- Name: index_apple_iap_notifications_on_organization_id_and_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_notifications_on_organization_id_and_status ON public.apple_iap_notifications USING btree (organization_id, status);
+
+
+--
+-- Name: index_apple_iap_orders_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_orders_on_organization_id ON public.apple_iap_orders USING btree (organization_id);
+
+
+--
+-- Name: index_apple_iap_orders_on_organization_id_and_payment_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_orders_on_organization_id_and_payment_status ON public.apple_iap_orders USING btree (organization_id, payment_status);
+
+
+--
+-- Name: index_apple_iap_orders_on_organization_id_and_refund_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_orders_on_organization_id_and_refund_status ON public.apple_iap_orders USING btree (organization_id, refund_status);
+
+
+--
+-- Name: index_apple_iap_orders_on_payment_provider_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_apple_iap_orders_on_payment_provider_id ON public.apple_iap_orders USING btree (payment_provider_id);
 
 
 --
@@ -10517,6 +10936,14 @@ ALTER TABLE ONLY public.fees
 
 
 --
+-- Name: apple_iap_consumption_requests fk_rails_0acab39ea9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_consumption_requests
+    ADD CONSTRAINT fk_rails_0acab39ea9 FOREIGN KEY (apple_iap_notification_id) REFERENCES public.apple_iap_notifications(id);
+
+
+--
 -- Name: usage_monitoring_triggered_alerts fk_rails_0baa7bd751; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -11077,6 +11504,14 @@ ALTER TABLE ONLY public.daily_usages
 
 
 --
+-- Name: apple_iap_orders fk_rails_3cca8cb49c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_orders
+    ADD CONSTRAINT fk_rails_3cca8cb49c FOREIGN KEY (organization_id) REFERENCES public.organizations(id);
+
+
+--
 -- Name: charges fk_rails_3cfe1d68d7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -11490,6 +11925,14 @@ ALTER TABLE ONLY public.billing_entities_taxes
 
 ALTER TABLE ONLY public.fixed_charges_taxes
     ADD CONSTRAINT fk_rails_665ae33492 FOREIGN KEY (tax_id) REFERENCES public.taxes(id);
+
+
+--
+-- Name: apple_iap_notifications fk_rails_6681388c5b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_notifications
+    ADD CONSTRAINT fk_rails_6681388c5b FOREIGN KEY (apple_iap_order_id) REFERENCES public.apple_iap_orders(id);
 
 
 --
@@ -12077,6 +12520,14 @@ ALTER TABLE ONLY public.recurring_transaction_rules_invoice_custom_sections
 
 
 --
+-- Name: apple_iap_orders fk_rails_a87f355b87; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_orders
+    ADD CONSTRAINT fk_rails_a87f355b87 FOREIGN KEY (payment_provider_id) REFERENCES public.payment_providers(id);
+
+
+--
 -- Name: integration_items fk_rails_a9dc2ea536; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -12114,6 +12565,14 @@ ALTER TABLE ONLY public.commitments_taxes
 
 ALTER TABLE ONLY public.usage_monitoring_subscription_activities
     ADD CONSTRAINT fk_rails_ab16de0b32 FOREIGN KEY (organization_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: apple_iap_fulfillment_events fk_rails_ab54c181e5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_fulfillment_events
+    ADD CONSTRAINT fk_rails_ab54c181e5 FOREIGN KEY (organization_id) REFERENCES public.organizations(id);
 
 
 --
@@ -12397,6 +12856,14 @@ ALTER TABLE ONLY public.integration_customers
 
 
 --
+-- Name: apple_iap_consumption_requests fk_rails_cf0839917d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_consumption_requests
+    ADD CONSTRAINT fk_rails_cf0839917d FOREIGN KEY (apple_iap_order_id) REFERENCES public.apple_iap_orders(id);
+
+
+--
 -- Name: wallet_transactions fk_rails_d07bc24ce3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -12581,6 +13048,14 @@ ALTER TABLE ONLY public.integration_mappings
 
 
 --
+-- Name: apple_iap_notifications fk_rails_e5c89f5695; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_notifications
+    ADD CONSTRAINT fk_rails_e5c89f5695 FOREIGN KEY (organization_id) REFERENCES public.organizations(id);
+
+
+--
 -- Name: user_devices fk_rails_e700a96826; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -12757,6 +13232,14 @@ ALTER TABLE ONLY public.billing_entities
 
 
 --
+-- Name: apple_iap_consumption_requests fk_rails_f732c789a2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_consumption_requests
+    ADD CONSTRAINT fk_rails_f732c789a2 FOREIGN KEY (organization_id) REFERENCES public.organizations(id);
+
+
+--
 -- Name: order_forms fk_rails_f94f882198; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -12770,6 +13253,14 @@ ALTER TABLE ONLY public.order_forms
 
 ALTER TABLE ONLY public.fees_taxes
     ADD CONSTRAINT fk_rails_f98413d404 FOREIGN KEY (tax_id) REFERENCES public.taxes(id) ON DELETE SET NULL;
+
+
+--
+-- Name: apple_iap_fulfillment_events fk_rails_f9d870376b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_fulfillment_events
+    ADD CONSTRAINT fk_rails_f9d870376b FOREIGN KEY (apple_iap_order_id) REFERENCES public.apple_iap_orders(id);
 
 
 --
@@ -12851,6 +13342,7 @@ ALTER TABLE ONLY public.membership_roles
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260728163242'),
 ('20260706173746'),
 ('20260703164249'),
 ('20260702074504'),
