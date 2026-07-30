@@ -1,16 +1,18 @@
-# syntax=lincanvas-registry.cn-hangzhou.cr.aliyuncs.com/lincanvas/dockerfile:1.25
+# syntax=docker/dockerfile:1
 
 ARG PDFCPU_VERSION=0.11.1
 ARG GO_VERSION=1.25.8
+ARG GO_IMAGE=golang:${GO_VERSION}
+ARG RUBY_IMAGE=ruby:4.0.2-slim
 
-FROM lincanvas-registry.cn-hangzhou.cr.aliyuncs.com/lincanvas/golang:${GO_VERSION} AS pdfcpu-build
+FROM ${GO_IMAGE} AS pdfcpu-build
 
 ARG PDFCPU_VERSION
 ENV GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
 
 RUN go install github.com/pdfcpu/pdfcpu/cmd/pdfcpu@v${PDFCPU_VERSION}
 
-FROM lincanvas-registry.cn-hangzhou.cr.aliyuncs.com/lincanvas/ruby:4.0.2-slim AS build
+FROM ${RUBY_IMAGE} AS build
 
 ARG BUNDLE_WITH
 
@@ -48,7 +50,7 @@ RUN --mount=type=secret,id=BUNDLE_GEMS__CONTRIBSYS__COM,env=BUNDLE_GEMS__CONTRIB
   bundle config set build.nokogiri --use-system-libraries &&\
   bundle install --jobs=3 --retry=3
 
-FROM lincanvas-registry.cn-hangzhou.cr.aliyuncs.com/lincanvas/ruby:4.0.2-slim
+FROM ${RUBY_IMAGE}
 
 ARG BUNDLE_WITH
 
