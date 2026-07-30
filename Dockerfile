@@ -39,10 +39,7 @@ COPY ./Gemfile.lock /app/Gemfile.lock
 
 ENV BUNDLER_VERSION='4.0.4'
 ENV PATH="$PATH:/root/.cargo/bin/"
-RUN gem sources --remove https://rubygems.org/ && \
-  gem sources --add https://mirrors.aliyun.com/rubygems/ && \
-  gem install bundler --no-document -v '4.0.4' && \
-  bundle config set --global mirror.https://rubygems.org https://mirrors.aliyun.com/rubygems/
+RUN gem install bundler --no-document -v '4.0.4'
 
 ENV BUNDLE_WITH=${BUNDLE_WITH:-}
 ENV BUNDLE_WITHOUT="development test"
