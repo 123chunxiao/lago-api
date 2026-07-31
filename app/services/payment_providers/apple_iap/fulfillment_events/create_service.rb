@@ -18,7 +18,7 @@ module PaymentProviders
 
         def initialize(order:, params:)
           @order = order
-          @params = params
+          @params = params.deep_symbolize_keys
 
           super()
         end
