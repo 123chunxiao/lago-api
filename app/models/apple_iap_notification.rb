@@ -12,7 +12,7 @@ class AppleIapNotification < ApplicationRecord
   belongs_to :organization
   belongs_to :apple_iap_order, optional: true
 
-  enum :status, STATUSES, validate: true
+  enum :status, STATUSES, validate: true, prefix: true
 
   validates :notification_uuid, :signed_payload, :received_at, presence: true
   validates :notification_uuid, uniqueness: true

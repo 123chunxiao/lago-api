@@ -29,7 +29,7 @@ module PaymentProviders
         client(
           path: "/inApps/v1/notifications/history",
           environment:
-        ).post(payload, authorization_headers)
+        ).post(payload, [authorization_headers])
       end
 
       private
