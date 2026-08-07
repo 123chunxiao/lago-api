@@ -15,7 +15,7 @@ class AppleIapConsumptionRequest < ApplicationRecord
   belongs_to :apple_iap_order
   belongs_to :apple_iap_notification
 
-  enum :status, STATUSES, validate: true
+  enum :status, STATUSES, validate: true, prefix: true
 
   validates :notification_uuid, :transaction_id, :deadline_at, presence: true
   validates :notification_uuid, uniqueness: true
