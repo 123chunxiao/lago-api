@@ -26,6 +26,7 @@ class AppleIapOrder < ApplicationRecord
 
   belongs_to :organization
   belongs_to :payment_provider, class_name: "PaymentProviders::AppleIapProvider"
+  belongs_to :payment, optional: true
 
   has_many :apple_iap_notifications
   has_many :apple_iap_fulfillment_events
@@ -43,6 +44,18 @@ class AppleIapOrder < ApplicationRecord
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[id business_request_id external_customer_id transaction_id product_id payment_status refund_status]
+  end
+
+  def apple_amount_cents
+    return if price_milliunits.blank? || currency.blank?
+
+    Money.from_amount(BigDecimal(price_milliunits.to_s) / 1000, currency).cents
+  rescue Money::Currency::UnknownCurrency
+    nil
+  end
+
+  def invoice_creation_requested?
+    metadata["create_invoice"] == true
   end
 end
 
@@ -80,6 +93,7 @@ end
 #  external_customer_id    :string
 #  organization_id         :uuid             not null
 #  original_transaction_id :string
+#  payment_id              :uuid
 #  payment_provider_id     :uuid             not null
 #  product_id              :string           not null
 #  transaction_id          :string           not null
@@ -93,10 +107,12 @@ end
 #  index_apple_iap_orders_on_organization_id                     (organization_id)
 #  index_apple_iap_orders_on_organization_id_and_payment_status  (organization_id,payment_status)
 #  index_apple_iap_orders_on_organization_id_and_refund_status   (organization_id,refund_status)
+#  index_apple_iap_orders_on_payment_id                          (payment_id) UNIQUE
 #  index_apple_iap_orders_on_payment_provider_id                 (payment_provider_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (organization_id => organizations.id)
+#  fk_rails_...  (payment_id => payments.id)
 #  fk_rails_...  (payment_provider_id => payment_providers.id)
 #

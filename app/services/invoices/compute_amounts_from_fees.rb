@@ -4,15 +4,16 @@ module Invoices
   class ComputeAmountsFromFees < BaseService
     Result = BaseResult[:invoice]
 
-    def initialize(invoice:, provider_taxes: nil)
+    def initialize(invoice:, provider_taxes: nil, skip_taxes: false)
       @invoice = invoice
       @provider_taxes = provider_taxes
+      @skip_taxes = skip_taxes
 
       super
     end
 
     def call
-      if should_apply_fee_taxes?
+      if should_apply_fee_taxes? && !skip_taxes
         invoice.fees.each do |fee|
           if should_apply_provider_taxes?
             Fees::ApplyProviderTaxesService.call!(fee:, fee_taxes: fee_taxes(fee))
@@ -31,7 +32,10 @@ module Invoices
         invoice.fees_amount_cents - invoice.progressive_billing_credit_amount_cents - invoice.coupons_amount_cents
       )
 
-      if should_apply_provider_taxes?
+      if skip_taxes
+        invoice.taxes_amount_cents = 0
+        invoice.taxes_rate = 0
+      elsif should_apply_provider_taxes?
         Invoices::ApplyProviderTaxesService.call!(invoice:, provider_taxes:)
       else
         Invoices::ApplyTaxesService.call!(invoice:)
@@ -50,7 +54,7 @@ module Invoices
 
     private
 
-    attr_reader :invoice, :provider_taxes
+    attr_reader :invoice, :provider_taxes, :skip_taxes
 
     def should_apply_provider_taxes?
       provider_taxes && customer_provider_taxation? && invoice.should_apply_provider_tax?

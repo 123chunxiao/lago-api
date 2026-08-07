@@ -375,6 +375,26 @@ input AddAlipayPaymentProviderInput {
 }
 
 """
+Apple IAP input arguments
+"""
+input AddAppleIapPaymentProviderInput {
+  appAppleId: BigInt!
+  bundleId: String!
+
+  """
+  A unique identifier for the client performing the mutation.
+  """
+  clientMutationId: String
+  code: String!
+  issuerId: String!
+  keyId: String!
+  name: String!
+  privateKey: String!
+  productIds: [String!]!
+  webhookBaseUrl: String
+}
+
+"""
 Cashfree input arguments
 """
 input AddCashfreePaymentProviderInput {
@@ -712,6 +732,19 @@ type ApiLogCollection {
   Pagination Metadata for navigating the Pagination
   """
   metadata: CollectionMetadata!
+}
+
+type AppleIapProvider {
+  appAppleId: BigInt
+  bundleId: String
+  code: String!
+  id: ID!
+  issuerId: String
+  keyId: String
+  name: String!
+  privateKey: ObfuscatedString
+  productIds: [String!]
+  webhookBaseUrl: String
 }
 
 type AppliedAddOn {
@@ -4346,6 +4379,7 @@ type CurrentOrganization {
   adyenPaymentProviders: [AdyenProvider!]
   alipayPaymentProviders: [AlipayProvider!]
   apiKey: String
+  appleIapPaymentProviders: [AppleIapProvider!]
   appliedDunningCampaign: DunningCampaign
   authenticatedMethod: AuthenticationMethodsEnum!
   authenticationMethods: [AuthenticationMethodsEnum!]!
@@ -5780,6 +5814,7 @@ type Event {
 
 enum EventCategoryEnum {
   ALERTS
+  APPLE_IAP
   BILLABLE_METRICS
   CREDIT_NOTES
   CUSTOMERS
@@ -5813,6 +5848,12 @@ type EventCollection {
 enum EventTypeEnum {
   alert_triggered
   all
+  apple_iap_consumption_requested
+  apple_iap_payment_failed
+  apple_iap_payment_succeeded
+  apple_iap_refund_declined
+  apple_iap_refund_reversed
+  apple_iap_refund_succeeded
   billable_metric_created
   billable_metric_deleted
   billable_metric_updated
@@ -7255,6 +7296,16 @@ type Mutation {
   ): AlipayProvider
 
   """
+  Add Apple IAP payment provider
+  """
+  addAppleIapPaymentProvider(
+    """
+    Parameters for AddAppleIapPaymentProvider
+    """
+    input: AddAppleIapPaymentProviderInput!
+  ): AppleIapProvider
+
+  """
   Add or update Cashfree payment provider
   """
   addCashfreePaymentProvider(
@@ -8625,6 +8676,16 @@ type Mutation {
   ): ApiKey
 
   """
+  Update Apple IAP payment provider
+  """
+  updateAppleIapPaymentProvider(
+    """
+    Parameters for UpdateAppleIapPaymentProvider
+    """
+    input: UpdateAppleIapPaymentProviderInput!
+  ): AppleIapProvider
+
+  """
   Update Avalara integration
   """
   updateAvalaraIntegration(
@@ -9444,7 +9505,7 @@ enum PaymentMethodTypeEnum {
   provider
 }
 
-union PaymentProvider = AdyenProvider | AlipayProvider | CashfreeProvider | FlutterwaveProvider | GocardlessProvider | MoneyhashProvider | StripeProvider
+union PaymentProvider = AdyenProvider | AlipayProvider | AppleIapProvider | CashfreeProvider | FlutterwaveProvider | GocardlessProvider | MoneyhashProvider | StripeProvider
 
 """
 PaymentProviderCollection type
@@ -10122,6 +10183,7 @@ enum ProviderPaymentMethodsEnum {
 enum ProviderTypeEnum {
   adyen
   alipay
+  apple_iap
   cashfree
   flutterwave
   gocardless
@@ -12850,6 +12912,27 @@ input UpdateApiKeyInput {
   id: ID!
   name: String
   permissions: JSON
+}
+
+"""
+Apple IAP update input arguments
+"""
+input UpdateAppleIapPaymentProviderInput {
+  appAppleId: BigInt
+  bundleId: String
+
+  """
+  A unique identifier for the client performing the mutation.
+  """
+  clientMutationId: String
+  code: String
+  id: ID!
+  issuerId: String
+  keyId: String
+  name: String
+  privateKey: String
+  productIds: [String!]
+  webhookBaseUrl: String
 }
 
 """

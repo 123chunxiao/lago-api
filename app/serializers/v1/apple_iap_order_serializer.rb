@@ -6,6 +6,8 @@ module V1
       {
         lago_id: model.id,
         business_request_id: model.business_request_id,
+        lago_payment_id: model.payment_id,
+        lago_invoice_id: (model.payment&.payable_type == "Invoice") ? model.payment.payable_id : nil,
         external_customer_id: model.external_customer_id,
         app_account_token: model.app_account_token,
         transaction_id: model.transaction_id,

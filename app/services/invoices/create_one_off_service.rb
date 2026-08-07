@@ -4,12 +4,13 @@ module Invoices
   class CreateOneOffService < BaseService
     Result = BaseResult[:invoice, :payment_method]
 
-    def initialize(customer:, currency:, fees:, timestamp:, skip_psp: false, voided_invoice_id: nil, payment_method_params: nil, invoice_custom_section: {}, billing_entity_id: nil, billing_entity_code: nil, purchase_order_number: nil)
+    def initialize(customer:, currency:, fees:, timestamp:, skip_psp: false, skip_taxes: false, voided_invoice_id: nil, payment_method_params: nil, invoice_custom_section: {}, billing_entity_id: nil, billing_entity_code: nil, purchase_order_number: nil)
       @customer = customer
       @currency = currency || customer&.currency
       @fees = fees
       @timestamp = timestamp
       @skip_psp = skip_psp || false
+      @skip_taxes = skip_taxes || false
       @voided_invoice_id = voided_invoice_id
       @payment_method_params = payment_method_params
       @invoice_custom_section = invoice_custom_section
@@ -60,7 +61,7 @@ module Invoices
           Invoices::ApplyInvoiceCustomSectionsService.call(invoice:, custom_section_ids: invoice_custom_section_ids)
         end
 
-        totals_result = Invoices::ComputeTaxesAndTotalsService.call(invoice:)
+        totals_result = Invoices::ComputeTaxesAndTotalsService.call(invoice:, skip_taxes:)
         if totals_result.failure? && totals_result.error.is_a?(BaseService::UnknownTaxFailure)
           tax_deferred = true
           next
@@ -97,7 +98,7 @@ module Invoices
 
     private
 
-    attr_accessor :timestamp, :currency, :customer, :fees, :invoice, :skip_psp, :voided_invoice_id, :payment_method_params, :invoice_custom_section
+    attr_accessor :timestamp, :currency, :customer, :fees, :invoice, :skip_psp, :skip_taxes, :voided_invoice_id, :payment_method_params, :invoice_custom_section
     attr_reader :billing_entity_id, :billing_entity_code, :billing_entity, :purchase_order_number
 
     def create_generating_invoice

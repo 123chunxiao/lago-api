@@ -33,6 +33,7 @@ module Api
             :private_key,
             :bundle_id,
             :app_apple_id,
+            :webhook_base_url,
             product_ids: []
           )
         end

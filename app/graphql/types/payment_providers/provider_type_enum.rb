@@ -6,6 +6,8 @@ module Types
       Customer::PAYMENT_PROVIDERS.each do |type|
         value type
       end
+
+      value "apple_iap"
     end
   end
 end

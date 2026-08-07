@@ -29,6 +29,8 @@ module Resolvers
         PaymentProviders::AdyenProvider.to_s
       when "alipay"
         PaymentProviders::AlipayProvider.to_s
+      when "apple_iap"
+        PaymentProviders::AppleIapProvider.to_s
       when "stripe"
         PaymentProviders::StripeProvider.to_s
       when "gocardless"

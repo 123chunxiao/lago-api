@@ -265,6 +265,7 @@ ALTER TABLE IF EXISTS ONLY public.refunds DROP CONSTRAINT IF EXISTS fk_rails_2dc
 ALTER TABLE IF EXISTS ONLY public.ai_conversations DROP CONSTRAINT IF EXISTS fk_rails_2c06a74f41;
 ALTER TABLE IF EXISTS ONLY public.wallets DROP CONSTRAINT IF EXISTS fk_rails_2b35eef34b;
 ALTER TABLE IF EXISTS ONLY public.usage_thresholds DROP CONSTRAINT IF EXISTS fk_rails_2908dd8de5;
+ALTER TABLE IF EXISTS ONLY public.apple_iap_orders DROP CONSTRAINT IF EXISTS fk_rails_28faa5ce88;
 ALTER TABLE IF EXISTS ONLY public.wallets DROP CONSTRAINT IF EXISTS fk_rails_28077d4aa2;
 ALTER TABLE IF EXISTS ONLY public.charge_filters DROP CONSTRAINT IF EXISTS fk_rails_27b55b8574;
 ALTER TABLE IF EXISTS ONLY public.payment_providers DROP CONSTRAINT IF EXISTS fk_rails_26be2f764d;
@@ -798,6 +799,7 @@ DROP INDEX IF EXISTS public.index_applied_add_ons_on_customer_id;
 DROP INDEX IF EXISTS public.index_applied_add_ons_on_add_on_id_and_customer_id;
 DROP INDEX IF EXISTS public.index_applied_add_ons_on_add_on_id;
 DROP INDEX IF EXISTS public.index_apple_iap_orders_on_payment_provider_id;
+DROP INDEX IF EXISTS public.index_apple_iap_orders_on_payment_id;
 DROP INDEX IF EXISTS public.index_apple_iap_orders_on_organization_id_and_refund_status;
 DROP INDEX IF EXISTS public.index_apple_iap_orders_on_organization_id_and_payment_status;
 DROP INDEX IF EXISTS public.index_apple_iap_orders_on_organization_id;
@@ -2088,7 +2090,8 @@ CREATE TABLE public.apple_iap_orders (
     revocation_percentage integer,
     metadata jsonb DEFAULT '{}'::jsonb NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    payment_id uuid
 );
 
 
@@ -7593,6 +7596,13 @@ CREATE INDEX index_apple_iap_orders_on_organization_id_and_refund_status ON publ
 
 
 --
+-- Name: index_apple_iap_orders_on_payment_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_apple_iap_orders_on_payment_id ON public.apple_iap_orders USING btree (payment_id);
+
+
+--
 -- Name: index_apple_iap_orders_on_payment_provider_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -11288,6 +11298,14 @@ ALTER TABLE ONLY public.wallets
 
 
 --
+-- Name: apple_iap_orders fk_rails_28faa5ce88; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.apple_iap_orders
+    ADD CONSTRAINT fk_rails_28faa5ce88 FOREIGN KEY (payment_id) REFERENCES public.payments(id);
+
+
+--
 -- Name: usage_thresholds fk_rails_2908dd8de5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -13342,6 +13360,9 @@ ALTER TABLE ONLY public.membership_roles
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260807153335'),
+('20260807153334'),
+('20260807153333'),
 ('20260728163242'),
 ('20260706173746'),
 ('20260703164249'),

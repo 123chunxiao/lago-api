@@ -115,7 +115,7 @@ FactoryBot.define do
     end
 
     settings do
-      {bundle_id:, app_apple_id:, product_ids:}
+      {bundle_id:, app_apple_id:, product_ids:, webhook_base_url:}
     end
 
     transient do
@@ -125,6 +125,7 @@ FactoryBot.define do
       bundle_id { "com.example.linx" }
       app_apple_id { 123_456_789 }
       product_ids { ["com.example.linx.voice-clone"] }
+      webhook_base_url { "https://billing.example.com" }
     end
   end
 

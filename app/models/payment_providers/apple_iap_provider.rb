@@ -7,12 +7,13 @@ module PaymentProviders
     FAILED_STATUSES = %w[failed].freeze
 
     secrets_accessors :issuer_id, :key_id, :private_key
-    settings_accessors :bundle_id, :app_apple_id, :product_ids
+    settings_accessors :bundle_id, :app_apple_id, :product_ids, :webhook_base_url
 
     validates :issuer_id, :key_id, :private_key, :bundle_id, :app_apple_id, presence: true
     validates :app_apple_id, numericality: {only_integer: true, greater_than: 0}
     validates :product_ids, presence: true
     validate :product_ids_are_strings
+    validate :webhook_base_url_is_https
 
     def payment_type
       "apple_iap"
@@ -29,6 +30,17 @@ module PaymentProviders
       return if valid_product_ids
 
       errors.add(:product_ids, :invalid)
+    end
+
+    def webhook_base_url_is_https
+      return if webhook_base_url.blank?
+
+      uri = URI.parse(webhook_base_url)
+      return if uri.is_a?(URI::HTTPS) && uri.host.present? && uri.path.in?(["", "/"])
+
+      errors.add(:webhook_base_url, :invalid)
+    rescue URI::InvalidURIError
+      errors.add(:webhook_base_url, :invalid)
     end
   end
 end
