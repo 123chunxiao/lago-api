@@ -48,6 +48,8 @@ module PaymentProviders
           handle_apple_error(e)
         rescue ActiveRecord::RecordInvalid => e
           result.record_validation_failure!(record: e.record)
+        rescue BaseService::FailedResult => e
+          result.fail_with_error!(e)
         end
 
         private
@@ -77,6 +79,18 @@ module PaymentProviders
             return result.single_validation_failure!(
               field: :app_account_token,
               error_code: "invalid_uuid"
+            )
+          end
+          if params[:lago_invoice_id].present? && !valid_uuid?(params[:lago_invoice_id])
+            return result.single_validation_failure!(
+              field: :lago_invoice_id,
+              error_code: "invalid_uuid"
+            )
+          end
+          unless params[:create_invoice].nil? || [true, false].include?(params[:create_invoice])
+            return result.single_validation_failure!(
+              field: :create_invoice,
+              error_code: "invalid_boolean"
             )
           end
           if params[:signed_transaction].bytesize > 65_536
@@ -118,6 +132,14 @@ module PaymentProviders
             )
           end
 
+          remember_invoice_creation_request!(existing_order)
+          payment_result = sync_payment(
+            existing_order,
+            invoice_id: params[:lago_invoice_id],
+            create_invoice: existing_order.invoice_creation_requested?
+          )
+          return result_from(payment_result) if payment_result.failure?
+
           result.apple_iap_order = existing_order
           result
         end
@@ -126,7 +148,15 @@ module PaymentProviders
           existing_order.transaction_id == params[:transaction_id].to_s &&
             existing_order.product_id == params[:product_id] &&
             existing_order.external_customer_id == params[:external_customer_id] &&
-            existing_order.app_account_token.to_s == params[:app_account_token].to_s
+            existing_order.app_account_token.to_s == params[:app_account_token].to_s &&
+            invoice_matches_existing_order?
+        end
+
+        def invoice_matches_existing_order?
+          return true if params[:lago_invoice_id].blank? || existing_order.payment.blank?
+
+          existing_order.payment.payable_type == "Invoice" &&
+            existing_order.payment.payable_id.to_s == params[:lago_invoice_id].to_s
         end
 
         def conflicting_transaction_order
@@ -173,17 +203,20 @@ module PaymentProviders
         end
 
         def create_verifying_order!
-          @apple_iap_order = organization.apple_iap_orders.create!(
-            client_attributes.merge(
-              payment_provider:,
-              business_request_id: params[:business_request_id],
-              external_customer_id: params[:external_customer_id],
-              app_account_token: params[:app_account_token].presence || client_attributes[:app_account_token],
-              app_apple_id: payment_provider.app_apple_id,
-              signed_transaction: params[:signed_transaction],
-              metadata: params[:metadata] || {}
+          AppleIapOrder.transaction do
+            @apple_iap_order = organization.apple_iap_orders.create!(
+              client_attributes.merge(
+                payment_provider:,
+                business_request_id: params[:business_request_id],
+                external_customer_id: params[:external_customer_id],
+                app_account_token: params[:app_account_token].presence || client_attributes[:app_account_token],
+                app_apple_id: payment_provider.app_apple_id,
+                signed_transaction: params[:signed_transaction],
+                metadata: request_metadata
+              )
             )
-          )
+            sync_payment(@apple_iap_order, invoice_id: params[:lago_invoice_id]).raise_if_error!
+          end
         end
 
         def verify_with_apple!
@@ -204,15 +237,21 @@ module PaymentProviders
             return fail_revoked_order(server_validation_result.attributes)
           end
 
-          @apple_iap_order.update!(
-            server_validation_result.attributes.merge(
-              payment_status: :succeeded,
-              verified_at: Time.current,
-              signed_transaction: response.fetch("signedTransactionInfo"),
-              failure_code: nil,
-              failure_message: nil
+          AppleIapOrder.transaction do
+            @apple_iap_order.update!(
+              server_validation_result.attributes.merge(
+                payment_status: :succeeded,
+                verified_at: Time.current,
+                signed_transaction: response.fetch("signedTransactionInfo"),
+                failure_code: nil,
+                failure_message: nil
+              )
             )
-          )
+            sync_payment(
+              @apple_iap_order,
+              create_invoice: @apple_iap_order.invoice_creation_requested?
+            ).raise_if_error!
+          end
           after_commit do
             SendWebhookJob.perform_later("apple_iap.payment_succeeded", @apple_iap_order)
           end
@@ -242,13 +281,16 @@ module PaymentProviders
         end
 
         def fail_order!(code:, message:, attributes: {})
-          @apple_iap_order.update!(
-            attributes.merge(
-              payment_status: :failed,
-              failure_code: code,
-              failure_message: message
+          AppleIapOrder.transaction do
+            @apple_iap_order.update!(
+              attributes.merge(
+                payment_status: :failed,
+                failure_code: code,
+                failure_message: message
+              )
             )
-          )
+            sync_payment(@apple_iap_order).raise_if_error!
+          end
           after_commit do
             enqueue_payment_failed_webhook(code:, message:)
           end
@@ -264,10 +306,13 @@ module PaymentProviders
 
         def handle_apple_error(error)
           if @apple_iap_order
-            @apple_iap_order.update!(
-              failure_code: "apple_api_unavailable",
-              failure_message: error.message
-            )
+            AppleIapOrder.transaction do
+              @apple_iap_order.update!(
+                failure_code: "apple_api_unavailable",
+                failure_message: error.message
+              )
+              sync_payment(@apple_iap_order).raise_if_error!
+            end
             after_commit do
               PaymentProviders::AppleIap::Orders::SyncJob.perform_later(@apple_iap_order)
             end
@@ -283,6 +328,24 @@ module PaymentProviders
 
         def apple_client
           @client ||= PaymentProviders::AppleIap::Client.new(payment_provider:)
+        end
+
+        def sync_payment(order, invoice_id: nil, create_invoice: false)
+          PaymentProviders::AppleIap::Payments::UpsertService.call(
+            order:,
+            invoice_id:,
+            create_invoice:
+          )
+        end
+
+        def request_metadata
+          (params[:metadata] || {}).merge("create_invoice" => params[:create_invoice] == true)
+        end
+
+        def remember_invoice_creation_request!(order)
+          return unless params[:create_invoice] == true && !order.invoice_creation_requested?
+
+          order.update!(metadata: order.metadata.merge("create_invoice" => true))
         end
 
         def result_from(other_result)

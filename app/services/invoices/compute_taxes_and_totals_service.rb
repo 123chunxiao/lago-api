@@ -4,15 +4,22 @@ module Invoices
   class ComputeTaxesAndTotalsService < BaseService
     Result = BaseResult[:invoice, :non_invoiceable_fees]
 
-    def initialize(invoice:, finalizing: true)
+    def initialize(invoice:, finalizing: true, skip_taxes: false)
       @invoice = invoice
       @finalizing = finalizing
+      @skip_taxes = skip_taxes
 
       super
     end
 
     def call
       return result.not_found_failure!(resource: "invoice") unless invoice
+
+      if skip_taxes
+        Invoices::ComputeAmountsFromFees.call(invoice:, skip_taxes: true)
+        result.invoice = invoice
+        return result
+      end
 
       # Tax provider takes precedence - VIES is irrelevant for these customers
       if customer_provider_taxation? && invoice.should_apply_provider_tax?
@@ -33,7 +40,7 @@ module Invoices
 
     private
 
-    attr_reader :invoice, :finalizing
+    attr_reader :invoice, :finalizing, :skip_taxes
 
     def set_pending_tax_status!
       invoice.status = (invoice.subscription_gated? ? :open : :pending) if finalizing

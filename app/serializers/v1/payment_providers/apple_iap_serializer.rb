@@ -12,6 +12,7 @@ module V1
           bundle_id: model.bundle_id,
           app_apple_id: model.app_apple_id,
           product_ids: model.product_ids,
+          webhook_base_url: model.webhook_base_url,
           created_at: model.created_at.iso8601
         }
       end

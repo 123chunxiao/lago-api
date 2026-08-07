@@ -62,6 +62,10 @@ module PaymentProviders
                 failure_message: nil
               )
             )
+            PaymentProviders::AppleIap::Payments::UpsertService.call!(
+              order:,
+              create_invoice: order.invoice_creation_requested?
+            )
           end
 
           after_commit do

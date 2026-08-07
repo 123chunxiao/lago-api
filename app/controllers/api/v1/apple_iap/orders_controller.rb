@@ -55,6 +55,8 @@ module Api
             :product_id,
             :signed_transaction,
             :payment_provider_code,
+            :lago_invoice_id,
+            :create_invoice,
             metadata: {}
           )
         end

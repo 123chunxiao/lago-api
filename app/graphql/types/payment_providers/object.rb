@@ -7,6 +7,7 @@ module Types
 
       possible_types Types::PaymentProviders::Adyen,
         Types::PaymentProviders::Alipay,
+        Types::PaymentProviders::AppleIap,
         Types::PaymentProviders::Gocardless,
         Types::PaymentProviders::Stripe,
         Types::PaymentProviders::Cashfree,
@@ -19,6 +20,8 @@ module Types
           Types::PaymentProviders::Adyen
         when "PaymentProviders::AlipayProvider"
           Types::PaymentProviders::Alipay
+        when "PaymentProviders::AppleIapProvider"
+          Types::PaymentProviders::AppleIap
         when "PaymentProviders::StripeProvider"
           Types::PaymentProviders::Stripe
         when "PaymentProviders::GocardlessProvider"

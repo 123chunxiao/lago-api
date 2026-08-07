@@ -81,6 +81,10 @@ module PaymentProviders
               failure_message: nil
             )
           )
+          PaymentProviders::AppleIap::Payments::UpsertService.call!(
+            order:,
+            create_invoice: order.invoice_creation_requested?
+          )
           enqueue_webhook("apple_iap.payment_succeeded")
         end
 
