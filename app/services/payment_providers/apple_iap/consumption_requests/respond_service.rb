@@ -66,7 +66,7 @@ module PaymentProviders
             return invalid(:sample_content_provided, "sample_content_provided_missing")
           end
           return invalid(:consumption_percentage, "invalid_consumption_percentage") unless valid_percentage?
-          unless REFUND_PREFERENCES.include?(params[:refund_preference])
+          if params[:refund_preference].present? && !REFUND_PREFERENCES.include?(params[:refund_preference])
             return invalid(:refund_preference, "invalid_refund_preference")
           end
 
@@ -78,8 +78,9 @@ module PaymentProviders
         end
 
         def valid_percentage?
-          percentage = params[:consumption_percentage].to_i
-          [0, 100_000].include?(percentage)
+          return false unless params[:consumption_percentage].to_s.match?(/\A\d+\z/)
+
+          params[:consumption_percentage].to_i.between?(0, 100_000)
         end
 
         def apple_payload
@@ -91,7 +92,7 @@ module PaymentProviders
             sampleContentProvided: params[:sample_content_provided],
             consumptionPercentage: params[:consumption_percentage].to_i,
             refundPreference: params[:refund_preference]
-          }
+          }.compact
         end
 
         def invalid(field, code)
